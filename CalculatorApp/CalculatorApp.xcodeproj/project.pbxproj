@@ -13,6 +13,7 @@
 		30E5BBD826CA6E30000498EA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30E5BBD626CA6E30000498EA /* Main.storyboard */; };
 		30E5BBDA26CA6E34000498EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30E5BBD926CA6E34000498EA /* Assets.xcassets */; };
 		30E5BBDD26CA6E34000498EA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30E5BBDB26CA6E34000498EA /* LaunchScreen.storyboard */; };
+		30E5BBE526CA89B6000498EA /* CalculatorViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E5BBE426CA89B6000498EA /* CalculatorViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		30E5BBD926CA6E34000498EA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		30E5BBDC26CA6E34000498EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		30E5BBDE26CA6E34000498EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		30E5BBE426CA89B6000498EA /* CalculatorViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				30E5BBD026CA6E30000498EA /* AppDelegate.swift */,
 				30E5BBD226CA6E30000498EA /* SceneDelegate.swift */,
 				30E5BBD426CA6E30000498EA /* ViewController.swift */,
+				30E5BBE426CA89B6000498EA /* CalculatorViewCell.swift */,
 				30E5BBD626CA6E30000498EA /* Main.storyboard */,
 				30E5BBD926CA6E34000498EA /* Assets.xcassets */,
 				30E5BBDB26CA6E34000498EA /* LaunchScreen.storyboard */,
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30E5BBE526CA89B6000498EA /* CalculatorViewCell.swift in Sources */,
 				30E5BBD526CA6E30000498EA /* ViewController.swift in Sources */,
 				30E5BBD126CA6E30000498EA /* AppDelegate.swift in Sources */,
 				30E5BBD326CA6E30000498EA /* SceneDelegate.swift in Sources */,
