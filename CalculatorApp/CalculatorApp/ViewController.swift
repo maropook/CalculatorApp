@@ -6,8 +6,33 @@
 //
 
 import UIKit
-
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ViewController: UIViewController{
+    enum CalculateStatus {
+        case none, plus, minus, multiplication, division
+    }
+    var firstNumber = ""
+    var secondNumber = ""
+    var calculateStatus: CalculateStatus = .none
+    let numbers = [
+        ["C","%","$","÷",],
+        ["7","8","9","×",],
+        ["4","5","6","-",],
+        ["1","2","3","+",],
+        ["0",".","=",],
+    ]
+    @IBOutlet weak var calculatorHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var numberLabel: UILabel!
+    @IBOutlet weak var calculatorCollectionView: UICollectionView!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        calculatorCollectionView.delegate = self
+        calculatorCollectionView.dataSource = self
+        calculatorCollectionView.register(CalculatorViewCell.self, forCellWithReuseIdentifier: "cellId")
+        calculatorHeightConstraint.constant = view.frame.width * 1.4
+        calculatorCollectionView.backgroundColor = .clear
+        calculatorCollectionView.contentInset = .init(top: 0, left: 14, bottom: 0, right: 14)
+        view.backgroundColor = .black
+    }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return numbers.count
@@ -31,8 +56,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             width = width * 2 + 14 + 9
         }
         return .init(width: width, height: height)
-        
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -50,7 +73,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 cell.numberLabel.backgroundColor = UIColor.init(white: 1, alpha: 0.7)
                 cell.numberLabel.textColor = .black
             }
-            
         }
         return cell
     }
@@ -58,80 +80,68 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let number = numbers[indexPath.section][indexPath.row]
         
-        if calculateStatus == .none{
+        
+        switch calculateStatus {
+        case .none:
             switch number {
             case "0"..."9":
-                numberLabel.text = number
+                firstNumber += number
+                numberLabel.text = firstNumber
             case "+":
-                firstNumber = numberLabel.text ?? ""
                 calculateStatus = .plus
-            case "C":
-                clear()
-            default:
-                break
-            }
-        } else if calculateStatus == .plus {
-            switch number {
-            case "0"..."9":
-                numberLabel.text = number
-            case "=":
-                secondNumber = numberLabel.text ?? ""
-                
-                let firstNum = Double(firstNumber) ?? 0
-                let secondNum = Double(secondNumber) ?? 0
-                
-                numberLabel.text = String(firstNum + secondNum)
+            case "-":
+                calculateStatus = .minus
+            case "×":
+                calculateStatus = .multiplication
+            case "÷":
+                calculateStatus = .division
             case "C":
                 clear()
             default:
                 break
             }
             
+        case .plus, .minus, .multiplication, .division:
+            switch number {
+            case "0"..."9":
+                secondNumber = number
+                numberLabel.text = secondNumber
+            case "=":
+                
+                let firstNum = Double(firstNumber) ?? 0
+                let secondNum = Double(secondNumber) ?? 0
+                
+                switch calculateStatus {
+                case .plus:
+                    numberLabel.text = String(firstNum + secondNum)
+                case .minus:
+                    numberLabel.text = String(firstNum - secondNum)
+                case .multiplication:
+                    numberLabel.text = String(firstNum * secondNum)
+                case .division:
+                    numberLabel.text = String(firstNum / secondNum)
+                default:
+                    break
+                }
+            case "C":
+                clear()
+            default:
+                break
+            }
         }
-        
-        
-
     }
     
     func clear(){
+        firstNumber = ""
+        secondNumber = ""
         numberLabel.text = "0"
         calculateStatus = .none
     }
-    
-    enum CalculateStatus {
-        case none, plus
-    }
-    
-    var firstNumber = ""
-    var secondNumber = ""
-    var calculateStatus: CalculateStatus = .none
-    
-    let numbers = [
-        ["C","%","$","÷",],
-        ["7","8","9","×",],
-        ["4","5","6","-",],
-        ["1","2","3","+",],
-        ["0",".","=",],
-    ]
-    
-
-    @IBOutlet weak var calculatorHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var numberLabel: UILabel!
-    @IBOutlet weak var calculatorCollectionView: UICollectionView!
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        calculatorCollectionView.delegate = self
-        calculatorCollectionView.dataSource = self
-        calculatorCollectionView.register(CalculatorViewCell.self, forCellWithReuseIdentifier: "cellId")
-        calculatorHeightConstraint.constant = view.frame.width * 1.4
-        calculatorCollectionView.backgroundColor = .clear
-        calculatorCollectionView.contentInset = .init(top: 0, left: 14, bottom: 0, right: 14)
-        view.backgroundColor = .black
-    }
-
-
 }
 
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+}
 class CalculatorViewCell: UICollectionViewCell {
     
     let numberLabel: UILabel = {
@@ -145,13 +155,12 @@ class CalculatorViewCell: UICollectionViewCell {
         return label
     }()
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
         addSubview(numberLabel)
         numberLabel.frame.size = self.frame.size
         numberLabel.layer.cornerRadius = self.frame.height / 2
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
