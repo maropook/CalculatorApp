@@ -19,7 +19,7 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6nT-uu-e2V">
                                 <rect key="frame" x="0.0" y="462" width="414" height="400"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="400" id="TBj-Eo-9st"/>
                                 </constraints>
@@ -41,24 +41,25 @@
                                 </cells>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12345" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ejb-bq-qrq">
-                                <rect key="frame" x="0.0" y="402" width="414" height="60"/>
+                                <rect key="frame" x="0.0" y="402" width="401" height="60"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="jKd-sQ-jWl"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="75"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="labelColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="6nT-uu-e2V" secondAttribute="bottom" id="Qaq-b4-azB"/>
                             <constraint firstItem="6nT-uu-e2V" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="RCV-2q-fCQ"/>
                             <constraint firstItem="6nT-uu-e2V" firstAttribute="top" secondItem="Ejb-bq-qrq" secondAttribute="bottom" id="Vtp-qZ-cKF"/>
                             <constraint firstItem="Ejb-bq-qrq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="fid-pd-ekr"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6nT-uu-e2V" secondAttribute="trailing" id="uUO-MQ-gWp"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ejb-bq-qrq" secondAttribute="trailing" id="vG8-Gc-WPl"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ejb-bq-qrq" secondAttribute="trailing" constant="13" id="vG8-Gc-WPl"/>
                         </constraints>
                     </view>
                     <connections>
@@ -73,8 +74,11 @@
         </scene>
     </scenes>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
