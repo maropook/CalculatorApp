@@ -31,6 +31,7 @@ class ViewController: UIViewController{
         calculatorHeightConstraint.constant = view.frame.width * 1.4
         calculatorCollectionView.backgroundColor = .clear
         calculatorCollectionView.contentInset = .init(top: 0, left: 14, bottom: 0, right: 14)
+        numberLabel.text = "0"
         view.backgroundColor = .black
     }
     
@@ -87,6 +88,15 @@ class ViewController: UIViewController{
             case "0"..."9":
                 firstNumber += number
                 numberLabel.text = firstNumber
+                
+                if firstNumber.hasPrefix("0"){
+                    firstNumber = ""
+                }
+            case ".":
+                if !confirmIncludeDecimalPoint(numberString: firstNumber){
+                    firstNumber += number
+                    numberLabel.text = firstNumber
+                }
             case "+":
                 calculateStatus = .plus
             case "-":
@@ -104,25 +114,49 @@ class ViewController: UIViewController{
         case .plus, .minus, .multiplication, .division:
             switch number {
             case "0"..."9":
-                secondNumber = number
+                secondNumber += number
                 numberLabel.text = secondNumber
+                
+                if secondNumber.hasPrefix("0"){
+                    secondNumber = ""
+                }
+                
+            case ".":
+                if !confirmIncludeDecimalPoint(numberString: secondNumber){
+                    secondNumber += number
+                    numberLabel.text = secondNumber
+                }
             case "=":
                 
                 let firstNum = Double(firstNumber) ?? 0
                 let secondNum = Double(secondNumber) ?? 0
                 
+                var resultString: String?
+                
                 switch calculateStatus {
                 case .plus:
-                    numberLabel.text = String(firstNum + secondNum)
+                    resultString = String(firstNum + secondNum)
                 case .minus:
-                    numberLabel.text = String(firstNum - secondNum)
+                    resultString = String(firstNum - secondNum)
                 case .multiplication:
-                    numberLabel.text = String(firstNum * secondNum)
+                    resultString = String(firstNum * secondNum)
                 case .division:
-                    numberLabel.text = String(firstNum / secondNum)
+                    resultString = String(firstNum / secondNum)
                 default:
                     break
                 }
+                
+                if let result = resultString, result.hasSuffix(".0") {
+                    resultString = result.replacingOccurrences(of: ".0", with: "")
+                }
+                
+                numberLabel.text = resultString
+                firstNumber = ""
+                secondNumber = ""
+                
+                firstNumber += resultString ?? ""
+                calculateStatus = .none
+
             case "C":
                 clear()
             default:
@@ -130,7 +164,14 @@ class ViewController: UIViewController{
             }
         }
     }
-    
+    private func confirmIncludeDecimalPoint(numberString: String) -> Bool{
+        if numberString.range(of: ".") != nil || numberString.count == 0{
+            return true
+        }else{
+            return false
+        }
+        
+    }
     func clear(){
         firstNumber = ""
         secondNumber = ""
@@ -144,6 +185,15 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 }
 class CalculatorViewCell: UICollectionViewCell {
     
+    override var isHighlighted: Bool {
+        didSet {
+            if isHighlighted {
+                self.numberLabel.alpha = 0.3
+            } else {
+                self.numberLabel.alpha = 1
+            }
+        }
+    }
     let numberLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
